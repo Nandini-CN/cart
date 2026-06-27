@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adaptive Cart Engine — Production-Ready E-Commerce Microservice</title>
+  <meta name="description" content="Production-ready Shopping Cart Engine built with Node.js, Express, MongoDB, JWT Authentication. Multi-tenant session isolation, tiered promotional pricing, and real-time API inspection.">
+  <meta property="og:title" content="Adaptive Cart Engine">
+  <meta property="og:description" content="A production-ready e-commerce cart engine microservice with multi-tenant isolation and dynamic promotion rules.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Canvas particle background -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- ═══════════════════════ TOP NAV ═══════════════════════ -->
+  <header id="mainHeader">
+    <div class="container header-container">
+      <a class="logo-area" href="#hero">
+        <div class="logo-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16 10a4 4 0 01-8 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <span class="logo-title">CartEngine</span>
+          <span class="logo-sub">v1.0 · Production</span>
+        </div>
+      </a>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#architecture" class="nav-link">Architecture</a>
+        <a href="#dashboard" class="nav-link">Dashboard</a>
+        <a href="#api-docs" class="nav-link">API Docs</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="status-pill" id="serverStatus">
+          <span class="dot dot-green"></span>
+          <span>Live</span>
+        </div>
+        <a href="#dashboard" class="btn btn-sm btn-primary">Open Dashboard</a>
+      </div>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════ HERO ═══════════════════════ -->
+  <section id="hero" class="hero-section">
+    <div class="container hero-container">
+
+      <div class="hero-badge reveal">
+        <span class="badge-dot"></span>
+        Node.js Internship Assessment · Production-Ready
+      </div>
+
+      <h1 class="hero-title reveal">
+        Adaptive
+        <span class="gradient-text">E-Commerce</span><br>
+        Cart Engine
+      </h1>
+
+      <p class="hero-desc reveal">
+        A production-grade shopping cart microservice featuring <strong>multi-tenant session isolation</strong>,
+        a <strong>dynamic promotion engine</strong> with tiered discounts, and real-time cart management APIs —
+        all secured, rate-limited, and fully documented.
+      </p>
+
+      <div class="tech-stack reveal">
+        <span class="tech-badge tech-node">Node.js</span>
+        <span class="tech-badge tech-express">Express.js</span>
+        <span class="tech-badge tech-mongo">MongoDB</span>
+        <span class="tech-badge tech-jwt">JWT/Session</span>
+        <span class="tech-badge tech-rest">REST APIs</span>
+      </div>
+
+      <div class="hero-actions reveal">
+        <a href="#dashboard" class="btn btn-hero-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/></svg>
+          Open Live Dashboard
+        </a>
+        <a href="#api-docs" class="btn btn-hero-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          View API Docs
+        </a>
+      </div>
+
+      <!-- Hero metrics -->
+      <div class="hero-metrics reveal">
+        <div class="metric-card">
+          <span class="metric-value" data-target="10">0</span>
+          <span class="metric-label">REST Endpoints</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-card">
+          <span class="metric-value" data-target="3">0</span>
+          <span class="metric-label">Discount Tiers</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-card">
+          <span class="metric-value" data-target="100">0</span>
+          <span class="metric-suffix">req/15min</span>
+          <span class="metric-label">Rate Limited</span>
+        </div>
+        <div class="metric-divider"></div>
+        <div class="metric-card">
+          <span class="metric-value" data-target="7">0</span>
+          <span class="metric-suffix">day TTL</span>
+          <span class="metric-label">Cart Expiry</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator">
+      <div class="scroll-mouse">
+        <div class="scroll-wheel"></div>
+      </div>
+      <span>Scroll to explore</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ FEATURES ═══════════════════════ -->
+  <section id="features" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-eyebrow">Capabilities</span>
+        <h2 class="section-title">Built for Production</h2>
+        <p class="section-desc">Six core pillars that make this engine internship-assessment ready and real-world scalable.</p>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-card reveal">
+          <div class="feature-icon icon-purple">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Multi-Tenant Isolation</h3>
+          <p>Each user receives a unique UUID session token. Cart operations are strictly scoped to the authenticated tenant — zero cross-talk guaranteed.</p>
+          <div class="feature-tag">x-session-token</div>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon icon-green">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Tiered Promo Engine</h3>
+          <p>Dynamic campaign rules with Bronze (5%), Silver (10%), Gold (15%) tiers plus a 2% diversity bonus for shopping across 3+ categories.</p>
+          <div class="feature-tag">promotionService.js</div>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon icon-orange">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Rate Limiting</h3>
+          <p>100 requests per 15-minute window per IP via express-rate-limit. Registration endpoints throttled to 10 req/15min to prevent abuse.</p>
+          <div class="feature-tag">express-rate-limit</div>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon icon-blue">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><polyline points="12 6 12 12 16 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <h3>TTL Cart Expiry</h3>
+          <p>MongoDB TTL index auto-deletes inactive carts after 7 days. Each cart interaction refreshes the expiry — eliminating database bloat.</p>
+          <div class="feature-tag">MongoDB TTL Index</div>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon icon-pink">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><polyline points="9 11 12 14 22 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Input Validation</h3>
+          <p>Every request validated via express-validator at the route level. Structured 400 errors with field-level detail returned on any schema mismatch.</p>
+          <div class="feature-tag">express-validator</div>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon icon-teal">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Structured Logging</h3>
+          <p>Winston + Morgan HTTP logger pipeline writes JSON logs (combined.log, error.log) with timestamps, IPs, method, route, and tenant context.</p>
+          <div class="feature-tag">winston + morgan</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ ARCHITECTURE ═══════════════════════ -->
+  <section id="architecture" class="section section-dark">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-eyebrow">Design</span>
+        <h2 class="section-title">Clean Layered Architecture</h2>
+        <p class="section-desc">Strict separation of concerns — each layer has one responsibility and passes processed data to the next.</p>
+      </div>
+
+      <div class="arch-layout reveal">
+        <!-- Left: Flow diagram -->
+        <div class="arch-diagram">
+          <div class="arch-layer layer-client">
+            <div class="arch-layer-icon">🌐</div>
+            <div class="arch-layer-content">
+              <span class="arch-layer-title">Client</span>
+              <span class="arch-layer-sub">Browser / Postman / curl</span>
+            </div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-layer layer-middleware">
+            <div class="arch-layer-icon">🔒</div>
+            <div class="arch-layer-content">
+              <span class="arch-layer-title">Middleware Layer</span>
+              <span class="arch-layer-sub">Rate Limiter · Morgan Logger · Session Auth · Validator</span>
+            </div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-layer layer-controller">
+            <div class="arch-layer-icon">🎮</div>
+            <div class="arch-layer-content">
+              <span class="arch-layer-title">Controller Layer</span>
+              <span class="arch-layer-sub">HTTP mapping · Response shaping · Error routing</span>
+            </div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-layer layer-service">
+            <div class="arch-layer-icon">⚙️</div>
+            <div class="arch-layer-content">
+              <span class="arch-layer-title">Service Layer</span>
+              <span class="arch-layer-sub">Business logic · Cart state · Promotion calculation</span>
+            </div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-layer layer-data">
+            <div class="arch-layer-icon">🗄️</div>
+            <div class="arch-layer-content">
+              <span class="arch-layer-title">Data Layer</span>
+              <span class="arch-layer-sub">MongoDB · Mongoose ODM · TTL indexes</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Promo formula & schema -->
+        <div class="arch-details">
+          <div class="arch-detail-card">
+            <h4>Promotion Formula</h4>
+            <div class="formula-steps">
+              <div class="formula-step">
+                <span class="formula-label">Subtotal</span>
+                <code class="formula-code">Σ (price × quantity)</code>
+              </div>
+              <div class="formula-step">
+                <span class="formula-label">Tier %</span>
+                <code class="formula-code">match(subtotal, campaign.tiers)</code>
+              </div>
+              <div class="formula-step">
+                <span class="formula-label">Diversity %</span>
+                <code class="formula-code">categories ≥ 3 ? 2% : 0%</code>
+              </div>
+              <div class="formula-step formula-total">
+                <span class="formula-label">Final</span>
+                <code class="formula-code">subtotal × (1 − tier% − div%)</code>
+              </div>
+            </div>
+          </div>
+
+          <div class="arch-detail-card">
+            <h4>MongoDB Schema</h4>
+            <pre class="schema-code">Cart {
+  userId    → ref(User)
+  status    → active | checked_out
+  items[]   → embedded subdocs
+  expiresAt → TTL(7 days)
+}
+
+CartItem {
+  productId · name · price
+  category · quantity
+}</pre>
+          </div>
+
+          <div class="arch-detail-card">
+            <h4>Project Structure</h4>
+            <pre class="schema-code">src/
+├── controllers/
+├── services/
+├── models/
+├── routes/
+├── middleware/
+├── validators/
+├── config/
+└── public/</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ PROMO TIERS ═══════════════════════ -->
+  <section class="section promo-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-eyebrow">Dynamic Promotions</span>
+        <h2 class="section-title">Tiered Discount Engine</h2>
+        <p class="section-desc">Discounts are applied automatically at checkout based on cart value and category diversity.</p>
+      </div>
+
+      <div class="promo-tiers reveal">
+        <div class="promo-tier tier-none">
+          <div class="tier-icon">⬜</div>
+          <div class="tier-name">No Tier</div>
+          <div class="tier-range">₹0 – ₹499</div>
+          <div class="tier-pct">0%</div>
+          <div class="tier-bar"><div class="tier-bar-fill" style="width:0%"></div></div>
+        </div>
+        <div class="promo-tier tier-bronze">
+          <div class="tier-icon">🥉</div>
+          <div class="tier-name">Bronze</div>
+          <div class="tier-range">₹500 – ₹999</div>
+          <div class="tier-pct">5% off</div>
+          <div class="tier-bar"><div class="tier-bar-fill" style="width:33%"></div></div>
+        </div>
+        <div class="promo-tier tier-silver">
+          <div class="tier-icon">🥈</div>
+          <div class="tier-name">Silver</div>
+          <div class="tier-range">₹1,000 – ₹1,999</div>
+          <div class="tier-pct">10% off</div>
+          <div class="tier-bar"><div class="tier-bar-fill" style="width:67%"></div></div>
+        </div>
+        <div class="promo-tier tier-gold">
+          <div class="tier-icon">🥇</div>
+          <div class="tier-name">Gold</div>
+          <div class="tier-range">₹2,000+</div>
+          <div class="tier-pct">15% off</div>
+          <div class="tier-bar"><div class="tier-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="promo-tier tier-diversity">
+          <div class="tier-icon">🌈</div>
+          <div class="tier-name">Diversity</div>
+          <div class="tier-range">≥ 3 categories</div>
+          <div class="tier-pct">+2% bonus</div>
+          <div class="tier-bar"><div class="tier-bar-fill" style="width:13%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ INTERACTIVE DASHBOARD ═══════════════════════ -->
+  <section id="dashboard" class="section section-dark dashboard-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-eyebrow">Live Demo</span>
+        <h2 class="section-title">Interactive Dashboard</h2>
+        <p class="section-desc">Register a user, add products, and watch the promotion engine calculate your discounts in real time.</p>
+      </div>
+
+      <!-- Tenant selector bar -->
+      <div class="tenant-bar reveal">
+        <div class="tenant-bar-left">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+          <label for="tenantSelect">Active Tenant:</label>
+          <select id="tenantSelect">
+            <option value="" disabled selected>Select user...</option>
+          </select>
+        </div>
+        <div class="tenant-bar-right" id="tokenDisplay" style="display:none">
+          <span class="token-label">Token:</span>
+          <code id="tokenValue"></code>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+
+        <!-- ── LEFT COLUMN ── -->
+        <div class="dash-left">
+
+          <!-- Onboard User -->
+          <div class="dash-card reveal">
+            <div class="dash-card-header">
+              <div class="dash-card-icon icon-purple">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg>
+              </div>
+              <h3>Onboard User Tenant</h3>
+            </div>
+            <p class="dash-card-desc">Register a new user or log in with an existing email. Each user gets an isolated cart via their <code>sessionToken</code>.</p>
+            <form id="registerForm" class="register-form">
+              <div class="form-row-2">
+                <div class="field-group">
+                  <label for="regUsername">Username</label>
+                  <input type="text" id="regUsername" placeholder="e.g. alice_dev" required autocomplete="off">
+                </div>
+                <div class="field-group">
+                  <label for="regEmail">Email</label>
+                  <input type="email" id="regEmail" placeholder="alice@shop.com" required autocomplete="off">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-full" id="regBtn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><line x1="19" y1="8" x2="19" y2="14" stroke="currentColor" stroke-width="2"/><line x1="22" y1="11" x2="16" y2="11" stroke="currentColor" stroke-width="2"/></svg>
+                Onboard User
+              </button>
+            </form>
+            <div id="authStatus" class="status-msg"></div>
+          </div>
+
+          <!-- Store Catalog -->
+          <div class="dash-card reveal">
+            <div class="dash-card-header">
+              <div class="dash-card-icon icon-green">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" stroke-width="2"/><line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2"/><path d="M16 10a4 4 0 01-8 0" stroke="currentColor" stroke-width="2"/></svg>
+              </div>
+              <h3>Demo Store Catalog</h3>
+            </div>
+            <p class="dash-card-desc">Click any product to add it to the active tenant's cart. Mix categories to unlock the Diversity Bonus.</p>
+
+            <div class="catalog-grid">
+              <div class="catalog-item" id="cat-kbd" onclick="quickAddItem('p_kbd','RGB Mechanical Keyboard','electronics',1299)">
+                <span class="cat-badge cat-electronics">Electronics</span>
+                <div class="cat-emoji">⌨️</div>
+                <h4>RGB Keyboard</h4>
+                <div class="cat-price-row">
+                  <span class="cat-price">₹1,299</span>
+                  <span class="cat-add-btn">+ Add</span>
+                </div>
+              </div>
+              <div class="catalog-item" id="cat-mouse" onclick="quickAddItem('p_mouse','Ergonomic Mouse','electronics',599)">
+                <span class="cat-badge cat-electronics">Electronics</span>
+                <div class="cat-emoji">🖱️</div>
+                <h4>Ergonomic Mouse</h4>
+                <div class="cat-price-row">
+                  <span class="cat-price">₹599</span>
+                  <span class="cat-add-btn">+ Add</span>
+                </div>
+              </div>
+              <div class="catalog-item" id="cat-headset" onclick="quickAddItem('p_headset','Noise-Cancel Headset','electronics',2499)">
+                <span class="cat-badge cat-electronics">Electronics</span>
+                <div class="cat-emoji">🎧</div>
+                <h4>NC Headset</h4>
+                <div class="cat-price-row">
+                  <span class="cat-price">₹2,499</span>
+                  <span class="cat-add-btn">+ Add</span>
+                </div>
+              </div>
+              <div class="catalog-item" id="cat-ddia" onclick="quickAddItem('p_ddia','Designing Data-Intensive Apps','books',450)">
+                <span class="cat-badge cat-books">Books</span>
+                <div class="cat-emoji">📗</div>
+                <h4>DDIA Book</h4>
+                <div class="cat-price-row">
+                  <span class="cat-price">₹450</span>
+                  <span class="cat-add-btn">+ Add</span>
+                </div>
+              </div>
+              <div class="catalog-item" id="cat-cleancode" onclick="quickAddItem('p_cleancode','Clean Code','books',350)">
+                <span class="cat-badge cat-books">Books</span>
+                <div class="cat-emoji">📘</div>
+                <h4>Clean Code</h4>
+                <div class="cat-price-row">
+                  <span class="cat-price">₹350</span>
+                  <span class="cat-add-btn">+ Add</span>
+                </div>
+              </div>
+              <div class="catalog-item" id="cat-shirt" onclick="quickAddItem('p_shirt','Cotton Shirt','clothing',800)">
+                <span class="cat-badge cat-clothing">Clothing</span>
+                <div class="cat-emoji">👕</div>
+                <h4>Cotton Shirt</h4>
+                <div class="cat-price-row">
+                  <span class="cat-price">₹800</span>
+                  <span class="cat-add-btn">+ Add</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-divider"><span>OR ADD CUSTOM PRODUCT</span></div>
+
+            <form id="customItemForm" class="custom-form">
+              <div class="form-row-3">
+                <div class="field-group">
+                  <label>Product ID</label>
+                  <input type="text" id="custPid" placeholder="p_99" required>
+                </div>
+                <div class="field-group">
+                  <label>Name</label>
+                  <input type="text" id="custName" placeholder="Product name" required>
+                </div>
+                <div class="field-group">
+                  <label>Category</label>
+                  <input type="text" id="custCategory" placeholder="electronics" required>
+                </div>
+              </div>
+              <div class="form-row-2">
+                <div class="field-group">
+                  <label>Price (₹)</label>
+                  <input type="number" id="custPrice" placeholder="0.00" min="0.01" step="0.01" required>
+                </div>
+                <div class="field-group">
+                  <label>Quantity</label>
+                  <input type="number" id="custQty" placeholder="1" min="1" value="1" required>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-outline btn-full">Add Custom Item</button>
+              <div id="customItemError" class="validation-error" style="display:none"></div>
+            </form>
+          </div>
+
+        </div>
+
+        <!-- ── RIGHT COLUMN ── -->
+        <div class="dash-right">
+
+          <!-- Active Cart -->
+          <div class="dash-card reveal">
+            <div class="dash-card-header">
+              <div class="dash-card-icon icon-blue">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="21" r="1" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="21" r="1" stroke="currentColor" stroke-width="2"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.95-1.54l1.65-7.46H6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <h3>Active Cart <span class="count-badge" id="cartItemCount">0</span></h3>
+              <button class="btn-icon btn-danger" onclick="clearCart()" title="Clear cart">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="currentColor" stroke-width="2"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" stroke="currentColor" stroke-width="2"/><path d="M10 11v6M14 11v6" stroke="currentColor" stroke-width="2"/></svg>
+              </button>
+            </div>
+            <div id="cartItemsList" class="cart-list">
+              <div class="empty-state">
+                <div class="empty-icon">🛒</div>
+                <p>No tenant selected or cart is empty.<br>Register a user and click items above.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Checkout Summary -->
+          <div class="dash-card checkout-card reveal">
+            <div class="dash-card-header">
+              <div class="dash-card-icon icon-orange">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="2"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="2"/></svg>
+              </div>
+              <h3>Checkout Summary</h3>
+            </div>
+
+            <div id="activeTierBadge" class="active-tier-badge" style="display:none"></div>
+
+            <div class="checkout-lines">
+              <div class="checkout-line">
+                <span class="cl-label">Subtotal</span>
+                <span class="cl-value" id="summarySubtotal">₹0.00</span>
+              </div>
+              <div class="checkout-line discount-line">
+                <div class="cl-discount-info">
+                  <span class="cl-bullet cl-bullet-green"></span>
+                  <span id="tierDiscountLabel">Tier Discount</span>
+                  <span id="tierDiscountPct" class="discount-badge">0%</span>
+                </div>
+                <span class="cl-value cl-green" id="tierDiscountAmount">−₹0.00</span>
+              </div>
+              <div class="checkout-line discount-line">
+                <div class="cl-discount-info">
+                  <span class="cl-bullet cl-bullet-purple"></span>
+                  <span id="diversityDiscountLabel">Diversity Bonus</span>
+                  <span id="diversityDiscountPct" class="discount-badge discount-badge-purple">0%</span>
+                </div>
+                <span class="cl-value cl-purple" id="diversityDiscountAmount">−₹0.00</span>
+              </div>
+              <div class="checkout-divider"></div>
+              <div class="checkout-line">
+                <span class="cl-label cl-savings">Total Savings</span>
+                <span class="cl-value cl-savings" id="totalSavings">₹0.00</span>
+              </div>
+              <div class="checkout-line total-line">
+                <span>Final Total</span>
+                <span class="cl-total" id="summaryTotal">₹0.00</span>
+              </div>
+            </div>
+
+            <div class="formula-box">
+              <div class="formula-box-title">Formula Applied</div>
+              <code id="formulaDisplay">subtotal = ₹0.00 | discount = ₹0.00 | final = ₹0.00</code>
+            </div>
+          </div>
+
+          <!-- Live API Inspector -->
+          <div class="dash-card inspector-card reveal">
+            <div class="dash-card-header">
+              <div class="dash-card-icon icon-teal">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><polyline points="16 18 22 12 16 6" stroke="currentColor" stroke-width="2"/><polyline points="8 6 2 12 8 18" stroke="currentColor" stroke-width="2"/></svg>
+              </div>
+              <h3>Live API Inspector</h3>
+              <button class="btn-icon" id="toggleJsonBtn" onclick="toggleInspector()" title="Minimize">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="4 14 10 14 10 20" stroke="currentColor" stroke-width="2"/><polyline points="20 10 14 10 14 4" stroke="currentColor" stroke-width="2"/><line x1="14" y1="10" x2="21" y2="3" stroke="currentColor" stroke-width="2"/><line x1="3" y1="21" x2="10" y2="14" stroke="currentColor" stroke-width="2"/></svg>
+              </button>
+            </div>
+
+            <div id="inspectorBody">
+              <div id="inspectorPlaceholder" class="inspector-placeholder">
+                <div class="inspector-placeholder-icon">🔌</div>
+                <p>Authenticate as a user and perform an action to see live API request/response data here.</p>
+              </div>
+
+              <div id="inspectorRequest" class="inspector-section" style="display:none">
+                <div class="inspector-header-bar">
+                  <span class="inspector-badge" id="reqMethod">GET</span>
+                  <span class="inspector-endpoint" id="reqEndpoint">/api/checkout/summary</span>
+                  <span class="inspector-status" id="resStatus"></span>
+                </div>
+                <div class="inspector-block">
+                  <div class="inspector-block-title">Request Headers</div>
+                  <div id="reqHeaders" class="inspector-rows"></div>
+                </div>
+                <div class="inspector-block" id="reqPayloadBlock" style="display:none">
+                  <div class="inspector-block-title">Request Body</div>
+                  <div id="reqPayload" class="inspector-rows"></div>
+                </div>
+              </div>
+
+              <div id="inspectorResponse" class="inspector-section" style="display:none">
+                <div class="inspector-block">
+                  <div class="inspector-block-title">Response Body</div>
+                  <div id="resBody" class="inspector-rows"></div>
+                </div>
+              </div>
+
+              <div id="rawToggle" class="inspector-section" style="display:none">
+                <div class="inspector-block">
+                  <div class="inspector-block-title">Raw JSON</div>
+                  <pre id="jsonViewer" class="json-viewer"></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ API DOCS ═══════════════════════ -->
+  <section id="api-docs" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-eyebrow">Reference</span>
+        <h2 class="section-title">API Documentation</h2>
+        <p class="section-desc">All endpoints require the <code>x-session-token</code> header (except registration). Base URL: <code>http://localhost:5000</code></p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="api-tabs reveal">
+        <button class="api-tab active" data-tab="auth" onclick="switchTab('auth', this)">Auth</button>
+        <button class="api-tab" data-tab="cart" onclick="switchTab('cart', this)">Cart</button>
+        <button class="api-tab" data-tab="checkout" onclick="switchTab('checkout', this)">Checkout</button>
+        <button class="api-tab" data-tab="health" onclick="switchTab('health', this)">Health</button>
+      </div>
+
+      <!-- Auth Tab -->
+      <div class="api-tab-content active" id="tab-auth">
+
+        <!-- Live session banner — shown when a user is authenticated -->
+        <div id="apiLiveSessionBanner" class="api-live-banner" style="display:none">
+          <span class="api-live-dot"></span>
+          <span id="apiLiveSessionLabel">Authenticated as <strong id="apiLiveUsername"></strong> — response examples below reflect your live session.</span>
+        </div>
+
+        <div class="api-endpoint reveal">
+          <div class="api-endpoint-header">
+            <span class="method-badge method-post">POST</span>
+            <code class="api-path">/api/users/register</code>
+            <span class="api-desc">Register or login a user</span>
+          </div>
+          <div class="api-body-grid">
+            <div class="api-col">
+              <div class="api-col-title">Request Body</div>
+              <pre class="code-block" id="docsRegisterRequest">{
+  "username": "alice_dev",
+  "email": "alice@shop.com"
+}</pre>
+            </div>
+            <div class="api-col">
+              <div class="api-col-title">Response 201</div>
+              <pre class="code-block" id="docsRegisterResponse">{
+  "success": true,
+  "data": {
+    "userId": "64a27f6...",
+    "username": "alice_dev",
+    "email": "alice@shop.com",
+    "sessionToken": "d4e21a78-295b-..."
+  }
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="api-endpoint reveal">
+          <div class="api-endpoint-header">
+            <span class="method-badge method-get">GET</span>
+            <code class="api-path">/api/users/me</code>
+            <span class="api-desc">Get current authenticated user</span>
+            <span class="api-auth-required">🔒 Auth required</span>
+          </div>
+          <div class="api-body-grid">
+            <div class="api-col">
+              <div class="api-col-title">Headers</div>
+              <pre class="code-block" id="docsMeTokenHeader">x-session-token: &lt;your-token-here&gt;</pre>
+            </div>
+            <div class="api-col">
+              <div class="api-col-title">Response 200</div>
+              <pre class="code-block" id="docsMeResponse">{
+  "success": true,
+  "data": {
+    "userId": "...",
+    "username": "alice_dev",
+    "email": "alice@shop.com"
+  }
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cart Tab -->
+      <div class="api-tab-content" id="tab-cart">
+        <div class="api-endpoint reveal">
+          <div class="api-endpoint-header">
+            <span class="method-badge method-get">GET</span>
+            <code class="api-path">/api/cart</code>
+            <span class="api-desc">Get active cart for current user</span>
+            <span class="api-auth-required">🔒 Auth required</span>
+          </div>
+          <div class="api-body-grid">
+            <div class="api-col">
+              <div class="api-col-title">Response 200</div>
+              <pre class="code-block">{
+  "success": true,
+  "data": {
+    "_id": "...",
+    "status": "active",
+    "items": [...],
+    "expiresAt": "2026-07-04T..."
+  }
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="api-endpoint reveal">
+          <div class="api-endpoint-header">
+            <span class="method-badge method-post">POST</span>
+            <code class="api-path">/api/cart/items</code>
+            <span class="api-desc">Add item or increment quantity</span>
+            <span class="api-auth-required">🔒 Auth required</span>
+          </div>
+          <div class="api-body-grid">
+            <div class="api-col">
+              <div class="api-col-title">Request Body</div>
+              <pre class="code-block">{
+  "productId": "p_101",
+  "name": "Mechanical Keyboard",
+  "category": "electronics",
+  "price": 1299,
+  "quantity": 1
+}</pre>
+            </div>
+            <div class="api-col">
+              <div class="api-col-title">Response 200</div>
+              <pre class="code-block">{
+  "success": true,
+  "message": "Item updated/added",
+  "data": { ...cart }
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="api-endpoint reveal">
+          <div class="api-endpoint-header">
+            <span class="method-badge method-patch">PATCH</span>
+            <code class="api-path">/api/cart/items/:productId</code>
+            <span class="api-desc">Update item quantity directly</span>
+            <span class="api-auth-required">🔒 Auth required</span>
+          </div>
+          <div class="api-body-grid">
+            <div class="api-col">
+              <div class="api-col-title">Request Body</div>
+              <pre class="code-block">{ "quantity": 3 }</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="api-endpoint reveal">
+          <div class="api-endpoint-header">
+            <span class="method-badge method-delete">DELETE</span>
+            <code class="api-path">/api/cart/items/:productId</code>
+            <span class="api-desc">Remove product from cart</span>
+            <span class="api-auth-required">🔒 Auth required</span>
+          </div>
+        </div>
+
+        <div class="api-endpoint reveal">
+          <div class="api-endpoint-header">
+            <span class="method-badge method-delete">DELETE</span>
+            <code class="api-path">/api/cart</code>
+            <span class="api-desc">Clear entire cart</span>
+            <span class="api-auth-required">🔒 Auth required</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Checkout Tab -->
+      <div class="api-tab-content" id="tab-checkout">
+        <div class="api-endpoint reveal">
+          <div class="api-endpoint-header">
+            <span class="method-badge method-get">GET</span>
+            <code class="api-path">/api/checkout/summary</code>
+            <span class="api-desc">Compute promo discounts and final total</span>
+            <span class="api-auth-required">🔒 Auth required</span>
+          </div>
+          <div class="api-body-grid">
+            <div class="api-col">
+              <div class="api-col-title">Response 200</div>
+              <pre class="code-block">{
+  "success": true,
+  "data": {
+    "subtotal": 1299,
+    "appliedDiscounts": {
+      "tier": {
+        "name": "Silver Discount",
+        "percentage": 10,
+        "amount": 129.9
+      },
+      "diversity": {
+        "name": "No category diversity bonus",
+        "percentage": 0,
+        "amount": 0,
+        "distinctCategoriesCount": 1
+      }
+    },
+    "totalDiscount": 129.9,
+    "finalTotal": 1169.1
+  }
+}</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="api-endpoint reveal">
+          <div class="api-endpoint-header">
+            <span class="method-badge method-get">GET</span>
+            <code class="api-path">/api/checkout/campaigns</code>
+            <span class="api-desc">List active promotion campaigns</span>
+          </div>
+        </div>
+
+        <div class="api-endpoint reveal">
+          <div class="api-endpoint-header">
+            <span class="method-badge method-post">POST</span>
+            <code class="api-path">/api/checkout/campaigns</code>
+            <span class="api-desc">Create a new promotion campaign</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Health Tab -->
+      <div class="api-tab-content" id="tab-health">
+        <div class="api-endpoint reveal">
+          <div class="api-endpoint-header">
+            <span class="method-badge method-get">GET</span>
+            <code class="api-path">/health</code>
+            <span class="api-desc">Server healthcheck endpoint</span>
+          </div>
+          <div class="api-body-grid">
+            <div class="api-col">
+              <div class="api-col-title">Response 200</div>
+              <pre class="code-block">{
+  "success": true,
+  "status": "UP",
+  "timestamp": "2026-06-27T...",
+  "environment": "development"
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ TECH STACK STRIP ═══════════════════════ -->
+  <section class="tech-strip section-dark">
+    <div class="container">
+      <div class="tech-strip-items">
+        <div class="tech-strip-item">
+          <span class="tech-strip-icon">🟢</span>
+          <span>Node.js</span>
+        </div>
+        <div class="tech-strip-sep">·</div>
+        <div class="tech-strip-item">
+          <span class="tech-strip-icon">⚡</span>
+          <span>Express.js</span>
+        </div>
+        <div class="tech-strip-sep">·</div>
+        <div class="tech-strip-item">
+          <span class="tech-strip-icon">🍃</span>
+          <span>MongoDB Atlas</span>
+        </div>
+        <div class="tech-strip-sep">·</div>
+        <div class="tech-strip-item">
+          <span class="tech-strip-icon">🦦</span>
+          <span>Mongoose</span>
+        </div>
+        <div class="tech-strip-sep">·</div>
+        <div class="tech-strip-item">
+          <span class="tech-strip-icon">🔐</span>
+          <span>JWT / Session</span>
+        </div>
+        <div class="tech-strip-sep">·</div>
+        <div class="tech-strip-item">
+          <span class="tech-strip-icon">🛡️</span>
+          <span>Rate Limiting</span>
+        </div>
+        <div class="tech-strip-sep">·</div>
+        <div class="tech-strip-item">
+          <span class="tech-strip-icon">📋</span>
+          <span>Winston Logs</span>
+        </div>
+        <div class="tech-strip-sep">·</div>
+        <div class="tech-strip-item">
+          <span class="tech-strip-icon">⏱️</span>
+          <span>TTL Expiry</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" stroke-width="1.8"/><line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="1.8"/><path d="M16 10a4 4 0 01-8 0" stroke="currentColor" stroke-width="1.8"/></svg>
+          CartEngine
+        </div>
+        <p>A production-ready adaptive e-commerce cart microservice<br>built for Node.js backend internship assessment.</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-links-group">
+          <span class="footer-links-title">Sections</span>
+          <a href="#features">Features</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#dashboard">Dashboard</a>
+          <a href="#api-docs">API Docs</a>
+        </div>
+        <div class="footer-links-group">
+          <span class="footer-links-title">Stack</span>
+          <span>Node.js + Express</span>
+          <span>MongoDB + Mongoose</span>
+          <span>REST APIs</span>
+          <span>Session Auth</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Adaptive Cart Engine · Node.js · Express · MongoDB · Rate Limiting · TTL Cart Expiry · Request Logging</span>
+    </div>
+  </footer>
+
+  <!-- Toast notification container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
